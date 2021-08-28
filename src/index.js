@@ -4,7 +4,6 @@ function eval() {
 }
 
 function expressionCalculator(expr) {
-    console.log(expr);
     //formatting string
     let formattedStr = '';
     for (let i = 0; i < expr.length; i++) {
@@ -35,10 +34,10 @@ function expressionCalculator(expr) {
         }
     })
 
-    const california = [];
-    const texas = [];
+    const california = []; //RPN
+    const texas = []; //Stack
     texas.push(formattedArray[0]);
-
+    //RPN transform
     formattedArray.forEach(item => {
         if (typeof item === 'number') {
             california.push(item);
@@ -99,33 +98,31 @@ function expressionCalculator(expr) {
         }
     })
 
-    let result = [];
+    const result = [];
     california.forEach((item, i) => {
+        let sum = 0;
         if (typeof item === 'number') {
             result.push(item);
         } else if (item === '+') {
-            let sum = 0;
             sum = result[result.length - 2] + result[result.length - 1];
             result.splice(result.length - 2, 2)
             result.push(sum);
         } else if (item === '-') {
-            let sum = 0;
             sum = result[result.length - 2] - result[result.length - 1];
             result.splice(result.length - 2, 2)
             result.push(sum);
         } else if (item === '*') {
-            let sum = 0;
             sum = result[result.length - 2] * result[result.length - 1];
             result.splice(result.length - 2, 2)
             result.push(sum);
         } else if (item === '/') {
             if (result[result.length - 1] === 0) throw 'TypeError: Division by zero.'
-            let sum = 0;
             sum = result[result.length - 2] / result[result.length - 1];
             result.splice(result.length - 2, 2)
             result.push(sum);
         }
     })
+
     return result[0];
 }
 
